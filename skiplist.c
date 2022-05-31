@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 #include "skiplist.h"
@@ -177,4 +177,4 @@ void SkipListinsert(SkipList * L,int key,char * data)
             p = head;
         }
     }
-}
+}*/

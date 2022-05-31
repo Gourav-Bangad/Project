@@ -1,4 +1,4 @@
-typedef struct Node
+/*typedef struct Node
 {
     int key;
     char * data;
@@ -20,4 +20,4 @@ Node * newNode(int key,char * data);
 void initSkipList(SkipList * l);
 void display(SkipList * L);
 int search (SkipList * L,int data);
-void SkipListinsert(SkipList * L,int key,char * data);
+void SkipListinsert(SkipList * L,int key,char * data);*/
