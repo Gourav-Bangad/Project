@@ -12,23 +12,32 @@ void RandomStringtoRbtree(int n)
     RBT  t;
     init(&t);
     char c[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    int len[]={6,7,8,9,10,11,12,13,14};
+  //  int len[]={6,7,8,9,10,11,12,13,14};
     for (int i=0;i<n;i++)
     {
-         int a  = rand()%(sizeof(len)/sizeof(len[0]));
+         RBT  t;
+    init(&t);
+    char c[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   // int len[]={6,7,8,9,10,11,12,13,14};
+    for (int i=0;i<n;i++)
+    {
+         int a  = rand()%(10);
+        // printf("%d\n",a);
          if(a<6)
          {
              a = a+6;
          }
+         //int a = 10;
          char * s = (char *)malloc(sizeof(char)*(a));
          for(int j=0;j<a;j++)
          {
              s[j] = c[rand()%(ARR_SIZE(c)-1)];
          }
          s[a] = '\0';
-         insert(&t,s);
+        insert(&t,s);
     }
     inorder(t);
+}
 }
 int main()
 {
@@ -76,6 +85,6 @@ int main()
     }
     // fclose(ptr);
     return 0;*/
-    RandomStringtoRbtree(1000);
+    RandomStringtoRbtree(15000);
     return 0;
 }
