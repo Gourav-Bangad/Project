@@ -126,6 +126,10 @@ void insert(RBT * t,char * data)
         {
             p = p->left;
         }
+        else
+        {
+            return;
+        }
     }
     if(strcmp(q->data,data)>0) // checking leaf node and inserting
     {
@@ -255,25 +259,234 @@ void insert(RBT * t,char * data)
         }
     }
 }
-void inorder(Node * n)
+
+void Inorder(Node * n)
 {
     if (n==NULL){
         return;
     }
-    inorder(n->left);
-    if (n->colour == 0)
+    Inorder(n->left);
+    if(n->colour==0)
     {
-        printf("%s -> black\n",n->data);
+        printf("%s-> black\n",n->data);
     }
-    else if (n->colour == 1)
+    else if(n->colour == 1)
     {
-        printf("%s -> red\n",n->data);
+        printf("%s->red\n",n->data);
+    }
+    Inorder(n->right);
+}
+
+Node * searchRB(RBT t,char * data)
+{
+    if(t==NULL)
+    {
+        return NULL;
+    }
+    if(strcmp(t->data,data)==0)
+        return t;
+    else if(strcmp(t->data,data)>0)
+        return searchRB(t->left,data);
+    else
+        return searchRB(t->right,data);
+}
+
+Node * sibling(RBT t,Node * a)
+{
+    if(a->parent!=NULL)
+    {
+        if(a->parent->left==a)
+            return a->parent->right;
+        else
+            return a->parent->left;
+    }
+}
+
+Node * inorderPredecessor(Node * root)
+{
+    Node * ptr = root;
+    ptr = ptr->left;
+    while(ptr->right!=NULL)
+    {
+        ptr = ptr->right;
+    }
+    return ptr;
+}
+
+Node * inorderSuccesor(Node * root)
+{
+    Node * ptr = root;
+    ptr = ptr->right;
+    while(ptr->left!=NULL)
+    {
+        ptr = ptr->left;
+    }
+    return ptr;
+}
+
+void swap(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+    return;
+}
+
+void remove_Node(RBT *t , char * data)
+{
+    Node * ptr = searchRB(*t,data);
+    delete_(t,ptr);
+    return;
+}
+
+void delete_(RBT * t,Node * dn) // dn - node to be deleted
+{
+    if((dn->right==NULL)&&(dn->left==NULL)&&dn->colour==1)  //leaf node is red direct delete
+    {
+        if(dn->parent->left==dn)
+            dn->parent->left=NULL;
+        else
+            dn->parent->right = NULL;
+        free(dn);
+    }
+    else if((dn->right==NULL&&dn->left==NULL) && dn->colour==0 && dn == *t)  // if node to be deleted is black and is only node
+    {                                                                        // present in tree direct delete it and make root null
+        free(dn);
+        *t = NULL;
+    }
+    else if((dn->right==NULL&&dn->left==NULL) && dn->colour==0)
+    {
+        dn->colour = -1;
+        remove_Db(t,dn);
     }
     else
     {
-        printf("%s -> DB\n",n->data);
+        if(dn->right!=NULL)
+        {
+            Node * ios = inorderSuccesor(dn);
+            strcpy(dn->data,ios->data);
+            delete_(t,ios);
+        }
+        else if(dn->left!=NULL)
+        {
+            Node * iop = inorderPredecessor(dn);
+            strcpy(dn->data,iop->data);
+            delete_(t,iop);
+        }
     }
-    inorder(n->right);
+    return;
 }
 
+int sib_red_away(RBT t,Node * dbn)  // will check if away node of sibling is red
+{
+    Node * sib = sibling(t,dbn);
+    if(sib->parent->left==sib)
+    {
+        if(sib->left!=NULL)
+        {
+            if(sib->left->colour==1)
+                return 1;
+        }
+    }
+    else
+    {
+        if(sib->right!=NULL)
+        {
+            if(sib->right->colour == 1)
+                return 1;
+        }
+    }
+    return 0;
+}
+void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
+{
+    if(dbn == *t)  // if dbn is root directly make it black and return
+    {
+        dbn->colour = 0;
+        return;
+    }
+    else
+    {
+        Node * sib = sibling(*t,dbn) ; // finding sibling of dbn
+        //If sibling of DB is black and both its children are black
+        if((sib==NULL || sib->colour==0) && ((sib->left->colour==0 || sib->left== NULL)&&(sib->right->colour==0 || sib->right==NULL)))
+        {
+            if(dbn->left==NULL&&dbn->right==NULL)
+            {
+                if(dbn->parent->colour==0)
+                    dbn->parent->colour=-1;//if parent is black make it double black
+                else
+                    dbn->parent->colour=0;//if parent is red make it black
+                sib->colour = 1; // make sibling red
+                if(dbn->parent->left==dbn)
+                    dbn->parent->left = NULL;
+                else
+                    dbn->parent->right = NULL;
+                free(dbn);
+                if(sib->parent->colour == -1)
+                    remove_Db(t,sib->parent);
+                return;
+            }
+            else
+            {
+                if(dbn->parent->colour==0)
+                    dbn->parent->colour=-1;//if parent is black make it double black
+                else
+                    dbn->parent->colour=0;//if parent is red make it black
+                sib->colour = 1; // make sibling red
+                if(dbn->parent->colour==-1)
+                    remove_Db(t,dbn->parent);
+                dbn->colour = 0;
+                return;
+            }
+        }
+        // if sibling color is red
+        else if(sib->colour==1)
+        {
+            swap(&(sib->colour),&(sib->parent->colour));
+            if(dbn->parent->left==dbn)  // rotate in direction of dbn
+                leftrotate(t,dbn->parent);
+            else
+                rightrotate(t,dbn->parent);
+            remove_Db(t,dbn);
+        }
+        //  If sibling of DB is black and its child far from DB is red
+        else if(sib->colour==0 && (sib_red_away(*t,dbn)))
+        {
+            swap(&(dbn->parent->colour),&(sib->colour));
+            if(dbn->parent->left==dbn)
+            {
+                dbn->parent->left = NULL;
+                free(dbn);
+                leftrotate(t,sib->parent);
+                sib->right->colour = 0;
+            }
+            else if(dbn->parent->right==dbn)
+            {
+                dbn->parent->right = NULL;
+                free(dbn);
+                rightrotate(t,sib->parent);
+                sib->left->colour = 0;
+            }
+            return;
+        }
+        //  If sibling of DB is black and its child near to DB is red
+        else if(sib->colour==0 && !(sib_red_away(*t,dbn)))
+        {
+            if(dbn->parent->left==dbn)
+            {
+                swap(&(sib->colour),&(sib->left->colour));
+                rightrotate(t,sib);
+                remove_Db(t,dbn);
+            }
+            else if(dbn->parent->right==dbn)
+            {
+                swap(&(sib->colour),&(sib->right->colour));
+                leftrotate(t,sib);
+                remove_Db(t,dbn);
+            }
+            return;
+        }
+    }
+}
 

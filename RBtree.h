@@ -16,7 +16,14 @@ void rightrotate(RBT * t, Node * n);
 void left_right(RBT * t, Node * n);
 void right_left(RBT * t,Node * n);
 void insert(RBT * t,char * data);
-void inorder(Node * n);
-
-
+void Inorder(Node * n);
+Node * searchRB(RBT t,char * data);
+Node * sibling(RBT t,Node * a);
+Node * inorderPredecessor(Node * root);
+Node * inorderSuccesor(Node * root);
+void swap(int* a, int* b);
+void remove_Node(RBT *t , char * data);
+void delete_(RBT * t,Node * dn);
+int sib_red_away(RBT t,Node * dbn);
+void remove_Db(RBT * t,Node * dbn);
 
