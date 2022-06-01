@@ -9,13 +9,9 @@ int arr[25000];
 
 void RandomStringtoRbtree(int n)
 {
+  //  FILE * fp;
+   // fp = fopen("temp.txt","w");
     RBT  t;
-    init(&t);
-    char c[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //  int len[]={6,7,8,9,10,11,12,13,14};
-    for (int i=0;i<n;i++)
-    {
-         RBT  t;
     init(&t);
     char c[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
    // int len[]={6,7,8,9,10,11,12,13,14};
@@ -34,11 +30,18 @@ void RandomStringtoRbtree(int n)
              s[j] = c[rand()%(ARR_SIZE(c)-1)];
          }
          s[a] = '\0';
-        insert(&t,s);
+         insert(&t,s);
+     //    printf("%d ",i);
+        // fprintf(fp,"%s\n",s);
+
     }
-    inorder(t);
+    Inorder(t);
+   // remove_Node(&t,"");
+   // printf("\n");
+  //  printf("Hi");
+  //  Inorder(t);
 }
-}
+
 int main()
 {
    /* SkipList * l = (SkipList *)malloc(sizeof(SkipList));
