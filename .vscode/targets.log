@@ -8,7 +8,7 @@ make.exe: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 01 23:09:43 2022
+# Make data base, printed on Sun Jun 05 18:01:13 2022
 
 # Variables
 
@@ -63,7 +63,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-a39471af-5c7a-4238-9cfe-2369fe9fe982-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-6262a788-b5d2-4262-8877-12a6ffa2c87a-sock
 # environment
 VSCODE_CWD = C:\Users\MI\Desktop\Project\Project
 # default
@@ -89,7 +89,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_7740_XLYLRIPPHRTQHHOP
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_2544_KRYMSTFRVKNZPUWU
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -199,7 +199,7 @@ PROCESSOR_LEVEL = 6
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 7740
+VSCODE_PID = 2544
 # environment
 USERDOMAIN_ROAMINGPROFILE = LAPTOP-4KJTPB46
 # variable set hash-table stats:
@@ -211,9 +211,9 @@ USERDOMAIN_ROAMINGPROFILE = LAPTOP-4KJTPB46
 
 # Directories
 
-# . (key c:/Users/MI/Desktop/Project/Project, mtime 1654018539): 19 files, no impossibilities.
+# . (key c:/Users/MI/Desktop/Project/Project, mtime 1654158079): 20 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -243,9 +243,16 @@ main.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-31 20:07:34
+#  Last modified 2022-06-01 23:27:31
 #  File has been updated.
 #  Successfully updated.
+
+hashfunc.o: RBtree.h hashfunc.c hashfunc.h RBtree.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 6):
+	cc -c hashfunc.c -o hashfunc.o
 
 # Not a target:
 .DEFAULT:
@@ -257,29 +264,41 @@ RBtree.o: RBtree.c RBtree.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 6):
-	gcc -c RBtree.c -o RBtree.o
+#  recipe to execute (from 'Makefile', line 8):
+	cc -c RBtree.c -o RBtree.o
 
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 8):
+#  recipe to execute (from 'Makefile', line 10):
 	rm *.o
 
-main: main.o RBtree.o
+# Not a target:
+hashfunc.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+main: main.o RBtree.o hashfunc.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
-	gcc -o main main.o RBtree.o
+	cc -o main main.o RBtree.o hashfunc.o
 
-main.o: main.c RBtree.c RBtree.h
+main.o: main.c RBtree.c hashfunc.c hashfunc.h RBtree.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 4):
-	gcc -c main.c -o main.o
+	cc -c main.c -o main.o
+
+# Not a target:
+hashfunc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 RBtree.c:
@@ -288,19 +307,19 @@ RBtree.c:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/30=0%
+# Load=14/1024=1%, Rehash=0, Collisions=0/41=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 192 B / avg = 8 B
-# current buf: size = 8162 B / used = 192 B / count = 24 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 25 / storage = 205 B / avg = 8 B
+# current buf: size = 8162 B / used = 205 B / count = 25 / avg = 8 B
 
-# strcache performance: lookups = 41 / hit rate = 41%
+# strcache performance: lookups = 51 / hit rate = 50%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=1/41=2%
-# Finished Make data base on Wed Jun 01 23:09:43 2022
+# Load=25/8192=0%, Rehash=0, Collisions=1/51=2%
+# Finished Make data base on Sun Jun 05 18:01:13 2022
 
  

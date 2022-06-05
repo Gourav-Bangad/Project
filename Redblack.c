@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include<string.h>
-#include "RBtree.h"
+#include <string.h>
+#include "Redblack.h"
 
 void init(RBT * t)
 {
@@ -14,7 +14,9 @@ Node * newNode(char * data)
 {
     Node * p = (Node *)malloc(sizeof(Node));
     p->colour = 1; //new node as red
-    p->data = data;
+    char * fin = (char*)malloc(sizeof(char)*100);
+    strcpy(fin,data);
+    p->data = fin;
     p->left = NULL;
     p->parent = NULL;
     p->right = NULL;
@@ -274,6 +276,10 @@ void Inorder(Node * n)
     {
         printf("%s->red\n",n->data);
     }
+    else
+    {
+        printf("%s->DB\n",n->data);
+    }
     Inorder(n->right);
 }
 
@@ -281,6 +287,7 @@ Node * searchRB(RBT t,char * data)
 {
     if(t==NULL)
     {
+       // printf("NULL mei ");
         return NULL;
     }
     if(strcmp(t->data,data)==0)
@@ -335,41 +342,52 @@ void swap(int* a, int* b)
 void remove_Node(RBT *t , char * data)
 {
     Node * ptr = searchRB(*t,data);
+  //  printf("%s ",ptr->data);
     delete_(t,ptr);
     return;
 }
 
 void delete_(RBT * t,Node * dn) // dn - node to be deleted
 {
-    if((dn->right==NULL)&&(dn->left==NULL)&&dn->colour==1)  //leaf node is red direct delete
+    if(((dn->right==NULL)&&(dn->left==NULL))&&dn->colour==1)  //leaf node is red direct delete
     {
+        printf("\nRED\n");
         if(dn->parent->left==dn)
             dn->parent->left=NULL;
         else
             dn->parent->right = NULL;
         free(dn);
+        return;
     }
     else if((dn->right==NULL&&dn->left==NULL) && dn->colour==0 && dn == *t)  // if node to be deleted is black and is only node
-    {                                                                        // present in tree direct delete it and make root null
+    {                                                                         // present in tree direct delete it and make root null
+        printf("\nRoot black node\n");
         free(dn);
         *t = NULL;
+        return;
     }
     else if((dn->right==NULL&&dn->left==NULL) && dn->colour==0)
     {
+        printf("\nBlack node\n");
         dn->colour = -1;
         remove_Db(t,dn);
+        return;
     }
     else
     {
         if(dn->right!=NULL)
         {
             Node * ios = inorderSuccesor(dn);
+            printf("HI");
             strcpy(dn->data,ios->data);
+            printf("HI");
+            // printf("%s ",dn->data);
             delete_(t,ios);
         }
         else if(dn->left!=NULL)
         {
             Node * iop = inorderPredecessor(dn);
+         //   printf("%s ",iop->data);
             strcpy(dn->data,iop->data);
             delete_(t,iop);
         }
@@ -400,8 +418,11 @@ int sib_red_away(RBT t,Node * dbn)  // will check if away node of sibling is red
 }
 void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
 {
+  //  printf("1");
+
     if(dbn == *t)  // if dbn is root directly make it black and return
     {
+        //printf("ROOT");
         dbn->colour = 0;
         return;
     }
@@ -409,8 +430,16 @@ void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
     {
         Node * sib = sibling(*t,dbn) ; // finding sibling of dbn
         //If sibling of DB is black and both its children are black
-        if((sib==NULL || sib->colour==0) && ((sib->left->colour==0 || sib->left== NULL)&&(sib->right->colour==0 || sib->right==NULL)))
+      //  printf("%s ",sib->data);
+      //  printf("%d ",sib->colour);
+      //  if(sib->left==NULL)
+      //      printf("Left NULL");
+      //  if(sib->right==NULL)
+      //      printf("Right NULL");
+
+        if((sib==NULL||sib->colour==0)&&((sib->left==NULL||sib->left->colour==0)&&(sib->right==NULL||sib->right->colour==0)))
         {
+        //    printf("CASE 1");
             if(dbn->left==NULL&&dbn->right==NULL)
             {
                 if(dbn->parent->colour==0)
@@ -439,10 +468,12 @@ void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
                 dbn->colour = 0;
                 return;
             }
+
         }
         // if sibling color is red
         else if(sib->colour==1)
         {
+          // printf("CASE 2");
             swap(&(sib->colour),&(sib->parent->colour));
             if(dbn->parent->left==dbn)  // rotate in direction of dbn
                 leftrotate(t,dbn->parent);
@@ -453,6 +484,7 @@ void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
         //  If sibling of DB is black and its child far from DB is red
         else if(sib->colour==0 && (sib_red_away(*t,dbn)))
         {
+       //     printf("CASE 3");
             swap(&(dbn->parent->colour),&(sib->colour));
             if(dbn->parent->left==dbn)
             {
@@ -473,6 +505,7 @@ void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
         //  If sibling of DB is black and its child near to DB is red
         else if(sib->colour==0 && !(sib_red_away(*t,dbn)))
         {
+        //    printf("CASE 4");
             if(dbn->parent->left==dbn)
             {
                 swap(&(sib->colour),&(sib->left->colour));
@@ -488,5 +521,6 @@ void remove_Db(RBT * t,Node * dbn)  // dbn - double black node
             return;
         }
     }
+    return ;
 }
 

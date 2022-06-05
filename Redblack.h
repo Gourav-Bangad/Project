@@ -1,3 +1,6 @@
+#ifndef REDBLACK_H
+#define REDBLACK_H 1
+
 typedef struct Node{
     char * data;
     int colour;  // 0 - black, 1 - red, -1 - double black
@@ -26,4 +29,4 @@ void remove_Node(RBT *t , char * data);
 void delete_(RBT * t,Node * dn);
 int sib_red_away(RBT t,Node * dbn);
 void remove_Db(RBT * t,Node * dbn);
-
+#endif
