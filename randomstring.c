@@ -77,3 +77,57 @@ int searchinBloomfilter(int arr[],int n,char * data)
         return 0;
     }
 }
+
+
+
+/*
+3G5aYY61LEd->red
+3TGJ2TUSz-> black
+5HfqR77->red
+8r6beU->red
+A1XvpFVj-> black
+APNXRPmc-> black
+AUfKRfc->red
+BOh8s4KWi-> black
+C81TbdkSmL->red
+FkuutS-> black
+GXix4A2D-> black
+IEAOeI-> black
+J6pkNzPZrI->red
+JXsNQp-> black
+Ogl4rhYQY->red
+Q8aZRhQ->red
+QV6uPDVniS->red
+RGryWtII-> black
+RKLpgTFur->red
+RMWuLn5U9-> black
+RaqbC8w->red
+S2TRqf6->red
+aZbLAX3cf-> black
+cMzfoV1qd->red
+cOrBLS-> black
+eBBsQwY6Y-> black
+ednHM3SOl-> black
+gFrYILo-> black
+gXLsxpTl->red
+ieLYCT4->red
+ixjnzi-> black
+iz2Mb1s7->red
+kidcDjo-> black
+lT2NqFJ->red
+mRf6Ci6-> black
+oZolmRBa->red
+pH71yEX-> black
+qtQvAauNjV->red
+rRjbDt3-> black
+rcR4ZD->red
+sl3xbYiMC-> black
+t3cew8k6->red
+tXsL1c00-> black
+voFOAmEaJ->red
+wFCHOzyf-> black
+x8dyDd3->red
+yPzGNsok-> black
+yfogkJ-> black
+z5b6KZmc->red
+ztxc1o-> black*/
