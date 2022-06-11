@@ -351,7 +351,7 @@ void delete_(RBT * t,Node * dn) // dn - node to be deleted
 {
     if(((dn->right==NULL)&&(dn->left==NULL))&&dn->colour==1)  //leaf node is red direct delete
     {
-        printf("\nRED\n");
+      //  printf("\nRED\n");
         if(dn->parent->left==dn)
             dn->parent->left=NULL;
         else
@@ -361,14 +361,14 @@ void delete_(RBT * t,Node * dn) // dn - node to be deleted
     }
     else if((dn->right==NULL&&dn->left==NULL) && dn->colour==0 && dn == *t)  // if node to be deleted is black and is only node
     {                                                                         // present in tree direct delete it and make root null
-        printf("\nRoot black node\n");
+     //   printf("\nRoot black node\n");
         free(dn);
         *t = NULL;
         return;
     }
     else if((dn->right==NULL&&dn->left==NULL) && dn->colour==0)
     {
-        printf("\nBlack node\n");
+    //    printf("\nBlack node\n");
         dn->colour = -1;
         remove_Db(t,dn);
         return;
@@ -378,9 +378,9 @@ void delete_(RBT * t,Node * dn) // dn - node to be deleted
         if(dn->right!=NULL)
         {
             Node * ios = inorderSuccesor(dn);
-            printf("HI");
+         //   printf("HI");
             strcpy(dn->data,ios->data);
-            printf("HI");
+          //  printf("HI");
             // printf("%s ",dn->data);
             delete_(t,ios);
         }

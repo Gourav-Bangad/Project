@@ -24,7 +24,7 @@ void RandomStringtoRbtree(int n,RBT * t)
              a = a+6;
          }
          //int a = 10;
-         char * s = (char *)malloc(sizeof(char)*(a));
+         char * s = (char *)malloc(sizeof(char)*(a+1));
          for(int j=0;j<a;j++)
          {
              s[j] = c[rand()%(ARR_SIZE(c)-1)];
